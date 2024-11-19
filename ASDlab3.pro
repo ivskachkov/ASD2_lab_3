@@ -18,6 +18,7 @@ SOURCES += \
 
 HEADERS += \
     adddialogwindow.h \
+    db.h \
     deletedialogwindow.h \
     editdialogwindow.h \
     mainwindow.h \
