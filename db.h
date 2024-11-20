@@ -13,8 +13,11 @@ struct Node
     vector<Node*> children;
     vector<pair<int, string>> value;
     bool leaf;
-    Node(bool isLeaf) : leaf(isLeaf) {}
+    Node(bool isLeaf = true) : leaf(isLeaf) {}
 };
+
+namespace {
+
 
 bool isLeaf(Node *node){
     return node->leaf;
@@ -175,11 +178,10 @@ void splitChild(Node* parent, int i) {
     parent->value.insert(parent->value.begin() + i, fullChild->value[T - 1]);
 }
 
-void insertNonFull(Node* node, int k) {
+void insertNonFull(Node* node, int k, const string & s) {
     int i = binarySearch(node->value, k);
-    //TODO: make_pair(k, !!!!! - запис)
     if (isLeaf(node)) {
-        node->value.insert(node->value.begin() + i, make_pair(k, ""));
+        node->value.insert(node->value.begin() + i, make_pair(k, s));
     } else {
         if (node->children[i]->value.size() == 2 * T - 1) {
             splitChild(node, i);
@@ -187,20 +189,21 @@ void insertNonFull(Node* node, int k) {
                 i++;
             }
         }
-        insertNonFull(node->children[i], k);
+        insertNonFull(node->children[i], k, s);
     }
 }
 
-void insert(Node*& root, int k) {
+void insert(Node*& root, int k, const string & s) {
     if (root->value.size() == 2 * T - 1) {
         Node* newRoot = new Node(false);
         newRoot->children.push_back(root);
         splitChild(newRoot, 0);
-        insertNonFull(newRoot, k);
+        insertNonFull(newRoot, k, s);
         root = newRoot;
     } else {
-        insertNonFull(root, k);
+        insertNonFull(root, k, s);
     }
 }
 
+}
 #endif // DB_H

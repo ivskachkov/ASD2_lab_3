@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="inputIndex">
    <property name="geometry">
     <rect>
      <x>250</x>
@@ -23,7 +23,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="btnSearch">
    <property name="geometry">
     <rect>
      <x>350</x>
@@ -60,6 +60,19 @@
    </property>
    <property name="text">
     <string>Введiть iндекс</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="resultLBL">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>260</y>
+     <width>171</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Вiдповiдь:</string>
    </property>
   </widget>
  </widget>
