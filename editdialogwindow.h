@@ -2,7 +2,7 @@
 #define EDITDIALOGWINDOW_H
 
 #include <QDialog>
-#include "db.h"
+#include "table.h"
 
 namespace Ui {
 class EditDialogWindow;
@@ -15,11 +15,17 @@ class EditDialogWindow : public QDialog
 public:
     explicit EditDialogWindow(QWidget *parent = nullptr);
     ~EditDialogWindow();
-    void setNode(Node *node);
+    void setTable(Table *node);
+
+private slots:
+    void on_btnEdit_clicked();
+
+
+    void on_pushButtonBack_clicked();
 
 private:
     Ui::EditDialogWindow *ui;
-    Node *root;
+    Table *root;
 };
 
 #endif // EDITDIALOGWINDOW_H

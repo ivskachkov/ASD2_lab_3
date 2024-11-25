@@ -14,7 +14,8 @@ SOURCES += \
     editdialogwindow.cpp \
     main.cpp \
     mainwindow.cpp \
-    searchdialogwindow.cpp
+    searchdialogwindow.cpp \
+    table.cpp
 
 HEADERS += \
     adddialogwindow.h \
@@ -22,7 +23,8 @@ HEADERS += \
     deletedialogwindow.h \
     editdialogwindow.h \
     mainwindow.h \
-    searchdialogwindow.h
+    searchdialogwindow.h \
+    table.h
 
 FORMS += \
     adddialogwindow.ui \

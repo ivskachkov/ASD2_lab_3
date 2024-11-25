@@ -4,8 +4,7 @@
 AddDialogWindow::AddDialogWindow(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::AddDialogWindow),
-    root(nullptr),
-    count(0)
+    root(nullptr)
 {
     ui->setupUi(this);
 }
@@ -15,7 +14,7 @@ AddDialogWindow::~AddDialogWindow()
     delete ui;
 }
 
-void AddDialogWindow::setNode(Node *node)
+void AddDialogWindow::setTable(Table *node)
 {
     root = node;
 }
@@ -24,7 +23,13 @@ void AddDialogWindow::on_btnAdd_clicked()
 {
     if(root != nullptr){
         auto value = ui->inputText->text().toStdString();
-        insert(root, count++, value);
+        root->insert(value);
     }
+}
+
+
+void AddDialogWindow::on_pushButtonBack_clicked()
+{
+    AddDialogWindow::hide();
 }
 

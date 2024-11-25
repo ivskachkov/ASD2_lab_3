@@ -14,7 +14,7 @@ SearchDialogWindow::~SearchDialogWindow()
     delete ui;
 }
 
-void SearchDialogWindow::setNode(Node *node)
+void SearchDialogWindow::setTable(Table *node)
 {
     root = node;
 }
@@ -23,14 +23,24 @@ void SearchDialogWindow::setNode(Node *node)
 
 void SearchDialogWindow::on_btnSearch_clicked()
 {
-    int i = ui->inputIndex->text().toInt();
+    bool ok;
+    auto i = ui->inputIndex->text().toInt(&ok);
+    if(!ok){
+        ui->resultLBL->setText("Уведіть ціле число.");
+    }
     if(root != nullptr){
-        auto result = search(root, i);
+        auto result = root->search(i);
         if(result.first != 0){
-            ui->resultLBL->setText(QString::fromStdString(result.second));
+            ui->resultLBL->setText("Запис за індексом: " + QString::fromStdString(result.second));
         }else{
             ui->resultLBL->setText("Відповідь не знайдено");
         }
     }
+}
+
+
+void SearchDialogWindow::on_pushButtonBack_clicked()
+{
+    SearchDialogWindow::hide();
 }
 

@@ -2,7 +2,7 @@
 #define SEARCHDIALOGWINDOW_H
 
 #include <QDialog>
-#include "db.h"
+#include "table.h"
 
 namespace Ui {
 class SearchDialogWindow;
@@ -15,14 +15,16 @@ class SearchDialogWindow : public QDialog
 public:
     explicit SearchDialogWindow(QWidget *parent = nullptr);
     ~SearchDialogWindow();
-    void setNode(Node *node);
+    void setTable(Table *node);
 
 private slots:
     void on_btnSearch_clicked();
 
+    void on_pushButtonBack_clicked();
+
 private:
     Ui::SearchDialogWindow *ui;
-    Node *root;
+    Table *root;
 };
 
 #endif // SEARCHDIALOGWINDOW_H

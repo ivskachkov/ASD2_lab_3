@@ -13,11 +13,13 @@ MainWindow::MainWindow(QWidget *parent)
     searchdialogwindow(new SearchDialogWindow(this)),
     editdialogwindow(new EditDialogWindow(this)),
     deletedialogwindow(new DeleteDialogWindow(this)),
-    root(new Node)
+    root(new Table)
 {
     ui->setupUi(this);
-    searchdialogwindow->setNode(root);
-    adddialogwindow->setNode(root);
+    searchdialogwindow->setTable(root);
+    adddialogwindow->setTable(root);
+    editdialogwindow->setTable(root);
+    deletedialogwindow->setTable(root);
 }
 
 MainWindow::~MainWindow()
@@ -48,41 +50,14 @@ void MainWindow::on_pushButtonDelete_clicked()
 
 void MainWindow::on_actionOpen_triggered(){
     qDebug() << "Open triggered";
-    QString s = read();
+    root->LoadFromFile("db.txt");
 }
 
 void MainWindow::on_actionSave_triggered(){
     qDebug() << "Save triggered";
+    root->SaveToFile("db.txt");
 }
 
-QString MainWindow::read()
-{
-    QString data;
-    QString fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Open File"), "/home/ivan/Qt/popitka/build", tr("Text files (*.txt)"));
-    QFile file(fileName);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-        return data;
 
-    QTextStream in(&file);
-    data = in.readAll();
-
-    file.close();
-    return data;
-}
-
-void MainWindow::write(QString data)
-{
-    QString fileName = QFileDialog::getSaveFileName(this,
-                                                    tr("Save file"), "/home/ivan/Qt/popitka/build", tr("Text files (*.txt)"));
-    QFile file(fileName + ".txt");
-
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-        return;
-
-    QTextStream out(&file);
-    out << data;
-    file.close();
-}
 
 

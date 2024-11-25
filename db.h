@@ -4,14 +4,21 @@
 #include <vector>
 #include <algorithm>
 #include <map>
+#include <string>
 
 using namespace std;
 constexpr int T = 100;
 
+struct Value{
+    int first;
+    string second;
+    bool isRemoved = false;
+};
+
 struct Node
 {
     vector<Node*> children;
-    vector<pair<int, string>> value;
+    vector<Value> value;
     bool leaf;
     Node(bool isLeaf = true) : leaf(isLeaf) {}
 };
@@ -23,7 +30,23 @@ bool isLeaf(Node *node){
     return node->leaf;
 }
 
-int binarySearch(const vector<pair<int, string>>& values, int k) {
+int binarySearch1(const vector<auto>& values, int k, int& iteration) {
+    int left = 0;
+    int right = values.size() - 1;
+    while (left <= right) {
+        iteration++;
+        int mid = left + (right - left) / 2;
+        if (values[mid].first == k)
+            return mid;
+        else if (values[mid].first < k)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+    return left;
+}
+
+int binarySearch(const vector<auto>& values, int k) {
     int left = 0;
     int right = values.size() - 1;
     while (left <= right) {
@@ -38,20 +61,20 @@ int binarySearch(const vector<pair<int, string>>& values, int k) {
     return left;
 }
 
-pair<int, string>& search(Node *node, int v) {
-    int i = binarySearch(node->value, v);
-
+auto& search(Node *node, int v, int& iteration) {
+    iteration++;
+    int i = binarySearch1(node->value, v, iteration);
     if (i < node->value.size() && node->value[i].first == v)
         return node->value[i];
 
     if (!node->leaf && i < node->children.size())
-        return search(node->children[i], v);
+        return search(node->children[i], v, iteration);
 
-    static pair<int, string> a = {0, ""};
+    static Value a = {0, "", true};
     return a;
 }
 
-bool remove(Node*& root, Node*& node, int k) {
+bool removeNode(Node*& root, Node*& node, int k) {
     int i = binarySearch(node->value, k);
 
     if (i < node->value.size() && node->value[i].first == k) {
@@ -66,7 +89,7 @@ bool remove(Node*& root, Node*& node, int k) {
                 }
                 int predecessorValue = predecessorNode->value.back().first;
                 node->value[i].first = predecessorValue;
-                return remove(root, node->children[i], predecessorValue);
+                return removeNode(root, node->children[i], predecessorValue);
             } else if (node->children[i + 1]->value.size() >= T) {
                 Node* successorNode = node->children[i + 1];
                 while (!isLeaf(successorNode)) {
@@ -74,7 +97,7 @@ bool remove(Node*& root, Node*& node, int k) {
                 }
                 int successorValue = successorNode->value.front().first;
                 node->value[i].first = successorValue;
-                return remove(root, node->children[i + 1], successorValue);
+                return removeNode(root, node->children[i + 1], successorValue);
             } else {
                 Node* leftChild = node->children[i];
                 Node* rightChild = node->children[i + 1];
@@ -92,7 +115,7 @@ bool remove(Node*& root, Node*& node, int k) {
                     root = leftChild;
                 }
 
-                return remove(root, leftChild, k);
+                return removeNode(root, leftChild, k);
             }
         }
     }
@@ -155,17 +178,15 @@ bool remove(Node*& root, Node*& node, int k) {
         }
     }
 
-    return remove(root, node->children[i], k);
+    return removeNode(root, node->children[i], k);
 }
 
 void splitChild(Node* parent, int i) {
     Node* fullChild = parent->children[i];
     Node* newChild = new Node(fullChild->leaf);
-
     for (int j = 0; j < T - 1; j++) {
         newChild->value.push_back(fullChild->value[j + T]);
-    }
-
+    } 
     if (!isLeaf(fullChild)) {
         for (int j = 0; j < T; j++) {
             newChild->children.push_back(fullChild->children[j + T]);
@@ -181,7 +202,7 @@ void splitChild(Node* parent, int i) {
 void insertNonFull(Node* node, int k, const string & s) {
     int i = binarySearch(node->value, k);
     if (isLeaf(node)) {
-        node->value.insert(node->value.begin() + i, make_pair(k, s));
+        node->value.insert(node->value.begin() + i, {k, s, false});
     } else {
         if (node->children[i]->value.size() == 2 * T - 1) {
             splitChild(node, i);

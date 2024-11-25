@@ -2,7 +2,7 @@
 #define ADDDIALOGWINDOW_H
 
 #include <QDialog>
-#include "db.h"
+#include "table.h"
 
 namespace Ui {
 class AddDialogWindow;
@@ -15,14 +15,16 @@ class AddDialogWindow : public QDialog
 public:
     explicit AddDialogWindow(QWidget *parent = nullptr);
     ~AddDialogWindow();
-    void setNode(Node *node);
+    void setTable(Table *node);
 
 private slots:
     void on_btnAdd_clicked();
 
+    void on_pushButtonBack_clicked();
+
 private:
     Ui::AddDialogWindow *ui;
-    Node *root;
+    Table *root;
     int count;
 };
 

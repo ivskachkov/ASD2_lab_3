@@ -33,7 +33,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="btnEdit">
    <property name="geometry">
     <rect>
      <x>350</x>
@@ -83,6 +83,32 @@
    </property>
    <property name="text">
     <string>Уведiть запис, на який хочете замiнити минулий</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="resultLBL">
+   <property name="geometry">
+    <rect>
+     <x>256</x>
+     <y>340</y>
+     <width>291</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>За індексом  змінено запис на </string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="iteration">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>550</y>
+     <width>57</width>
+     <height>14</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>iteration</string>
    </property>
   </widget>
  </widget>

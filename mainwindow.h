@@ -7,6 +7,7 @@
 #include "deletedialogwindow.h"
 #include "editdialogwindow.h"
 #include "db.h"
+#include "table.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -21,8 +22,6 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void write(QString data);
-    QString read();
 
 private slots:
     void on_pushButtonAdd_clicked();
@@ -42,6 +41,6 @@ private:
     SearchDialogWindow *searchdialogwindow;
     EditDialogWindow *editdialogwindow;
     DeleteDialogWindow *deletedialogwindow;
-    Node *root;
+    Table *root;
 };
 #endif // MAINWINDOW_H

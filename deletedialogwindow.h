@@ -2,7 +2,7 @@
 #define DELETEDIALOGWINDOW_H
 
 #include <QDialog>
-#include "db.h"
+#include "table.h"
 
 namespace Ui {
 class DeleteDialogWindow;
@@ -15,11 +15,16 @@ class DeleteDialogWindow : public QDialog
 public:
     explicit DeleteDialogWindow(QWidget *parent = nullptr);
     ~DeleteDialogWindow();
-    void setNode(Node *node);
+    void setTable(Table *node);
+
+private slots:
+    void on_btnDelete_clicked();
+
+    void on_pushButtonBack_clicked();
 
 private:
     Ui::DeleteDialogWindow *ui;
-    Node *root;
+    Table *root;
 };
 
 #endif // DELETEDIALOGWINDOW_H
